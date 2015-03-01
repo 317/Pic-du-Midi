@@ -19,7 +19,9 @@ void Satellite::initialise()
 }	
 
 void Satellite::tourne(int _angle) {
-  _servo.write(map(_angle, 0, 180, 0, 1023); //TOD : mapper les angles
+	_angle = max(0, _angle);
+	_angle = min(180, _angle);
+  	_servo.write(_angle); 
 }
 
 void Satellite::tourneGauche(int _degres) {
@@ -31,10 +33,9 @@ void Satellite::tourneDroite(int _degres) {
 }
 void Satellite::relativeTurn(int _degres){
 	int current_angle = _servo.read();
-	int ajout_angle = map(0,180, 0, 1023);
-	int new_angle = current_angle + ajout_angle;
-	new_angle = min(0, new_angle);
-	new_angle = max(1023, new_angle);
+	int new_angle = current_angle + _degres;
+	new_angle = max(0, new_angle);
+	new_angle = min(1023, new_angle);
 	_servo.write(new_angle);
 }
 
